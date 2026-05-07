@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍔 Hamburguesas Artesanales</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #C0392B;
+    --rojo-fuego: #E74C3C;
+    --amarillo: #F39C12;
+    --dorado: #D4A017;
+    --crema: #FDF6EC;
+    --cafe: #5D3A1A;
+    --cafe-claro: #8B5E3C;
+    --verde: #27AE60;
+    --bg: #1A0A00;
+    --texto-claro: #FDF6EC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--texto-claro);
+    overflow-x: hidden;
+  }
+
+  /* ===== FONDO ANIMADO ===== */
+  .bg-pattern {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(192,57,43,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(243,156,18,0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(93,58,26,0.3) 0%, transparent 50%);
+    animation: bgPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes bgPulse {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+  }
+
+  /* ===== HEADER FUEGO ===== */
+  header {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 60px 20px 20px;
+  }
+
+  .badge-mañana {
+    display: inline-block;
+    background: var(--rojo-fuego);
+    color: white;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    padding: 6px 20px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%,100% { box-shadow: 0 0 10px var(--rojo-fuego); }
+    50% { box-shadow: 0 0 30px var(--rojo-fuego), 0 0 60px rgba(231,76,60,0.4); }
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--amarillo) 0%, var(--dorado) 40%, var(--rojo) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+  }
+  @keyframes titleGlow {
+    from { filter: drop-shadow(0 0 20px rgba(243,156,18,0.5)); }
+    to { filter: drop-shadow(0 0 40px rgba(192,57,43,0.8)); }
+  }
+
+  .subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: var(--crema);
+    opacity: 0.85;
+    margin-top: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== HAMBURGUESA ANIMADA ===== */
+  .burger-scene {
+    position: relative; z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  .burger-wrapper {
+    position: relative;
+    width: 280px; height: 280px;
+    animation: float 4s ease-in-out infinite;
+    cursor: pointer;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-18px) rotate(2deg); }
+  }
+
+  .burger-wrapper:hover { animation-play-state: paused; transform: scale(1.05) rotate(0deg); }
+
+  /* Glow debajo */
+  .burger-shadow {
+    position: absolute;
+    bottom: -20px; left: 50%;
+    transform: translateX(-50%);
+    width: 200px; height: 30px;
+    background: radial-gradient(ellipse, rgba(192,57,43,0.6) 0%, transparent 70%);
+    animation: shadowFloat 4s ease-in-out infinite;
+    border-radius: 50%;
+  }
+  @keyframes shadowFloat {
+    0%,100% { transform: translateX(-50%) scaleX(1); opacity: 0.8; }
+    50% { transform: translateX(-50%) scaleX(0.7); opacity: 0.4; }
+  }
+
+  /* SVG hamburguesa */
+  .burger-svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 10px 30px rgba(192,57,43,0.5));
+  }
+
+  /* Partículas de vapor */
+  .steam {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+  }
+  .steam span {
+    display: block;
+    position: absolute;
+    width: 8px; height: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    animation: steamRise 2s ease-in infinite;
+  }
+  .steam span:nth-child(1) { left: -20px; animation-delay: 0s; }
+  .steam span:nth-child(2) { left: 0px; animation-delay: 0.5s; }
+  .steam span:nth-child(3) { left: 20px; animation-delay: 1s; }
+  @keyframes steamRise {
+    0% { transform: translateY(0) scale(0.5); opacity: 0.8; }
+    100% { transform: translateY(-60px) scale(2); opacity: 0; }
+  }
+
+  /* ===== FECHA Y HORA ===== */
+  .evento-banner {
+    position: relative; z-index: 10;
+    margin: 0 auto 40px;
+    max-width: 700px;
+    padding: 0 20px;
+  }
+  .evento-card {
+    background: linear-gradient(135deg, var(--rojo) 0%, #7B241C 100%);
+    border: 2px solid var(--amarillo);
+    border-radius: 12px;
+    padding: 24px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .evento-card::before {
+    content: '🔥';
+    position: absolute;
+    top: -10px; left: 20px;
+    font-size: 2rem;
+    animation: wiggle 1s infinite;
+  }
+  .evento-card::after {
+    content: '🔥';
+    position: absolute;
+    top: -10px; right: 20px;
+    font-size: 2rem;
+    animation: wiggle 1s infinite 0.5s;
+  }
+  @keyframes wiggle {
+    0%,100% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+  }
+  .evento-fecha {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    color: var(--amarillo);
+  }
+  .evento-hora {
+    font-size: 1.1rem;
+    color: var(--crema);
+    margin-top: 4px;
+    opacity: 0.9;
+  }
+
+  /* ===== PRECIOS ===== */
+  .precios-section {
+    position: relative; z-index: 10;
+    max-width: 700px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .precio-card {
+    background: linear-gradient(160deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(243,156,18,0.3);
+    border-radius: 16px;
+    padding: 30px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(10px);
+  }
+  .precio-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(192,57,43,0.3);
+  }
+  .precio-card.combo {
+    border-color: rgba(243,156,18,0.7);
+    background: linear-gradient(160deg, rgba(243,156,18,0.12) 0%, rgba(192,57,43,0.08) 100%);
+  }
+  .precio-card.combo::before {
+    content: '⭐ POPULAR';
+    position: absolute; top: 12px; right: -25px;
+    background: var(--amarillo);
+    color: var(--bg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    padding: 4px 40px;
+    transform: rotate(35deg);
+  }
+  .precio-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--amarillo);
+    margin-bottom: 8px;
+  }
+  .precio-valor {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    line-height: 1;
+    background: linear-gradient(135deg, white, var(--crema));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .precio-moneda { font-size: 2rem; }
+  .precio-detalle {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .precio-detalle strong { color: var(--amarillo); }
+
+  /* ===== INGREDIENTES ===== */
+  .ingredientes-section {
+    position: relative; z-index: 10;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    letter-spacing: 4px;
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--amarillo);
+    position: relative;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, var(--rojo), var(--amarillo));
+    margin: 12px auto 0;
+    border-radius: 2px;
+  }
+
+  .ingredientes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+  }
+  .ing-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .ing-card:hover {
+    background: rgba(192,57,43,0.15);
+    border-color: var(--rojo);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(192,57,43,0.25);
+  }
+  .ing-emoji { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+  .ing-nombre {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--crema);
+    line-height: 1.3;
+  }
+  .ing-desc {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ===== COMO ESTÁ HECHA ===== */
+  .proceso-section {
+    position: relative; z-index: 10;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+  .proceso-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .proceso-steps::before {
+    content: '';
+    position: absolute;
+    left: 30px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--rojo), var(--amarillo), var(--verde));
+  }
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0 20px 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideIn 0.6s forwards;
+  }
+  .step:nth-child(1) { animation-delay: 0.1s; }
+  .step:nth-child(2) { animation-delay: 0.2s; }
+  .step:nth-child(3) { animation-delay: 0.3s; }
+  .step:nth-child(4) { animation-delay: 0.4s; }
+  .step:nth-child(5) { animation-delay: 0.5s; }
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .step-num {
+    min-width: 60px; height: 60px;
+    background: linear-gradient(135deg, var(--rojo), var(--rojo-fuego));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 0 20px rgba(192,57,43,0.4);
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+  .step-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--amarillo);
+    margin-bottom: 4px;
+  }
+  .step-text p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+
+  /* ===== PERSONALIZADA ===== */
+  .custom-banner {
+    position: relative; z-index: 10;
+    max-width: 700px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+  .custom-card {
+    border: 2px dashed rgba(243,156,18,0.5);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    background: rgba(243,156,18,0.05);
+    position: relative;
+    overflow: hidden;
+  }
+  .custom-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(243,156,18,0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .custom-card h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--amarillo);
+    margin-bottom: 10px;
+  }
+  .custom-card p {
+    color: rgba(255,255,255,0.75);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ===== BOTÓN WHATSAPP ===== */
+  .cta-section {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 0 20px 80px;
+  }
+  .cta-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 24px;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    padding: 20px 48px;
+    border-radius: 60px;
+    box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-whatsapp::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-whatsapp:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 16px 50px rgba(37,211,102,0.6);
+  }
+  .btn-whatsapp:hover::before { opacity: 1; }
+  .btn-whatsapp:active { transform: scale(0.97); }
+
+  .btn-whatsapp svg {
+    width: 32px; height: 32px;
+    fill: white;
+  }
+
+  /* Pulso alrededor del botón */
+  .btn-pulse-wrapper {
+    display: inline-block;
+    position: relative;
+  }
+  .btn-pulse-wrapper::before,
+  .btn-pulse-wrapper::after {
+    content: '';
+    position: absolute; inset: -8px;
+    border: 2px solid rgba(37,211,102,0.4);
+    border-radius: 70px;
+    animation: pulse 2s ease-out infinite;
+  }
+  .btn-pulse-wrapper::after { animation-delay: 1s; }
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.1); opacity: 0; }
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 2px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 500px) {
+    .precios-section { grid-template-columns: 1fr; }
+    .precio-card.combo::before { display: none; }
+    h1 { font-size: 5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="badge-mañana">🍔 MAÑANA · EDICIÓN ESPECIAL · 9 MAYO 2026</div>
+  <h1>BURGER<br>HOUSE</h1>
+  <p class="subtitle">Artesanal · Con amor · Mucho sabor</p>
+</header>
+
+<!-- HAMBURGUESA SVG ANIMADA -->
+<div class="burger-scene">
+  <div class="burger-wrapper">
+    <div class="steam">
+      <span></span><span></span><span></span>
+    </div>
+    <svg class="burger-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Sombra interior del pan -->
+      <defs>
+        <radialGradient id="panTop" cx="50%" cy="60%" r="50%">
+          <stop offset="0%" stop-color="#D4841A"/>
+          <stop offset="100%" stop-color="#8B5E3C"/>
+        </radialGradient>
+        <radialGradient id="panBot" cx="50%" cy="40%" r="50%">
+          <stop offset="0%" stop-color="#C97A12"/>
+          <stop offset="100%" stop-color="#7A4E2D"/>
+        </radialGradient>
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.4)"/>
+        </filter>
+      </defs>
+
+      <!-- Pan de arriba -->
+      <ellipse cx="100" cy="58" rx="72" ry="42" fill="url(#panTop)" filter="url(#shadow)"/>
+      <ellipse cx="100" cy="48" rx="60" ry="30" fill="#E8951A" opacity="0.5"/>
+      <!-- Semillas de ajonjolí -->
+      <ellipse cx="80" cy="44" rx="5" ry="2.5" fill="#F5DEB3" transform="rotate(-20,80,44)"/>
+      <ellipse cx="100" cy="40" rx="5" ry="2.5" fill="#F5DEB3" transform="rotate(10,100,40)"/>
+      <ellipse cx="120" cy="44" rx="5" ry="2.5" fill="#F5DEB3" transform="rotate(-15,120,44)"/>
+      <ellipse cx="90" cy="52" rx="4" ry="2" fill="#F5DEB3" transform="rotate(5,90,52)"/>
+      <ellipse cx="112" cy="51" rx="4" ry="2" fill="#F5DEB3" transform="rotate(-10,112,51)"/>
+
+      <!-- Lechuga -->
+      <path d="M28 90 Q40 82 55 88 Q70 80 85 87 Q100 79 115 86 Q130 80 145 87 Q158 82 172 88 Q172 98 158 98 Q145 91 130 97 Q115 91 100 97 Q85 91 70 97 Q55 91 42 98 Q28 100 28 90Z" fill="#4CAF50"/>
+      <path d="M35 88 Q50 82 65 88 Q80 82 95 88 Q110 82 125 88 Q140 82 165 88" fill="none" stroke="#388E3C" stroke-width="1.5" stroke-linecap="round"/>
+
+      <!-- Tomate -->
+      <path d="M30 100 Q100 95 170 100 Q172 110 170 112 Q100 117 30 112 Q28 108 30 100Z" fill="#E53935"/>
+      <line x1="100" y1="96" x2="100" y2="116" stroke="#B71C1C" stroke-width="1" opacity="0.6"/>
+      <line x1="70" y1="97" x2="70" y2="116" stroke="#B71C1C" stroke-width="1" opacity="0.6"/>
+      <line x1="130" y1="97" x2="130" y2="116" stroke="#B71C1C" stroke-width="1" opacity="0.6"/>
+
+      <!-- Queso derritiéndose -->
+      <path d="M26 118 Q40 114 56 118 Q70 114 86 118 Q100 114 114 118 Q128 114 144 118 Q160 114 174 118 Q178 125 174 128 Q168 132 160 128 Q148 132 135 128 Q122 132 108 128 Q95 132 82 128 Q68 132 56 128 Q44 132 36 128 Q26 125 26 118Z" fill="#FDD835"/>
+      <!-- Derrames del queso -->
+      <path d="M56 128 Q52 136 55 142" fill="none" stroke="#FDD835" stroke-width="6" stroke-linecap="round"/>
+      <path d="M108 128 Q105 138 107 144" fill="none" stroke="#FDD835" stroke-width="5" stroke-linecap="round"/>
+      <path d="M160 128 Q158 136 160 141" fill="none" stroke="#FDD835" stroke-width="5" stroke-linecap="round"/>
+
+      <!-- Carne a la parrilla -->
+      <path d="M28 138 Q100 132 172 138 Q174 152 172 155 Q100 161 28 155 Q26 150 28 138Z" fill="#6D3B1B"/>
+      <!-- Marcas de parrilla -->
+      <line x1="50" y1="137" x2="55" y2="158" stroke="#3E1F0B" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="80" y1="136" x2="85" y2="158" stroke="#3E1F0B" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="110" y1="136" x2="115" y2="158" stroke="#3E1F0B" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+      <line x1="140" y1="136" x2="145" y2="158" stroke="#3E1F0B" stroke-width="3.5" stroke-linecap="round" opacity="0.7"/>
+
+      <!-- Cebolla caramelizada -->
+      <path d="M30 158 Q55 153 80 158 Q100 154 120 158 Q145 153 170 158 Q172 166 170 168 Q145 163 120 168 Q100 164 80 168 Q55 163 30 168 Q28 163 30 158Z" fill="#D4891A"/>
+      <path d="M35 160 Q60 157 85 160 Q105 157 125 160 Q150 157 165 160" fill="none" stroke="#9C5C00" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+
+      <!-- Pan de abajo -->
+      <path d="M24 168 Q28 175 30 178 Q100 184 170 178 Q172 175 176 168 Q100 162 24 168Z" fill="url(#panBot)"/>
+      <ellipse cx="100" cy="175" rx="73" ry="9" fill="#A0552A" opacity="0.4"/>
+    </svg>
+    <div class="burger-shadow"></div>
+  </div>
+</div>
+
+<!-- EVENTO -->
+<div class="evento-banner">
+  <div class="evento-card">
+    <div class="evento-fecha">📅 Sabado 9 de Mayo · 2026</div>
+    <div class="evento-hora">⏰ A partir de las 1:00 PM — ¡No te quedés sin la tuya!</div>
+  </div>
+</div>
+
+<!-- PRECIOS -->
+<div class="precios-section">
+  <div class="precio-card">
+    <div class="precio-label">🍔 Solo</div>
+    <div class="precio-valor"><span class="precio-moneda">$</span>15K</div>
+    <div class="precio-detalle">Hamburguesa artesanal<br>con todos los ingredientes</div>
+  </div>
+  <div class="precio-card combo">
+    <div class="precio-label">🍟 Combo</div>
+    <div class="precio-valor"><span class="precio-moneda">$</span>20K</div>
+    <div class="precio-detalle">
+      Hamburguesa +<br>
+      <strong>🍟 Papas a la francesa</strong><br>
+      <strong>🥤 Guarapo de panela</strong>
+    </div>
+  </div>
+</div>
+
+<!-- INGREDIENTES -->
+<div class="ingredientes-section">
+  <h2 class="section-title">Lo que lleva 🥩</h2>
+  <div class="ingredientes-grid">
+    <div class="ing-card">
+      <span class="ing-emoji">🥩</span>
+      <div class="ing-nombre">Carne de Res</div>
+      <div class="ing-desc">Corte cadera, jugoso y tierno</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🧅</span>
+      <div class="ing-nombre">Cebolla Caramelizada</div>
+      <div class="ing-desc">Dulce y dorada a fuego lento</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🍅</span>
+      <div class="ing-nombre">Tomate Fresco</div>
+      <div class="ing-desc">Maduro y natural</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🥬</span>
+      <div class="ing-nombre">Lechuga</div>
+      <div class="ing-desc">Fresca y crujiente</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🧀</span>
+      <div class="ing-nombre">Queso Fundido</div>
+      <div class="ing-desc">Derretido sobre la carne</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🍅</span>
+      <div class="ing-nombre">Salsa de Tomate</div>
+      <div class="ing-desc">Casera y sabrosa</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🍍</span>
+      <div class="ing-nombre">Salsa de Piña</div>
+      <div class="ing-desc">El toque tropical especial</div>
+    </div>
+    <div class="ing-card">
+      <span class="ing-emoji">🍯</span>
+      <div class="ing-nombre">Toque de Miel</div>
+      <div class="ing-desc">En el pan, para el sabor</div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓMO ESTÁ HECHA -->
+<div class="proceso-section">
+  <h2 class="section-title">Cómo la hacemos ✨</h2>
+  <div class="proceso-steps">
+    <div class="step">
+      <div class="step-num">🥩</div>
+      <div class="step-text">
+        <h3>La Carne</h3>
+        <p>Corte cadera fresco, sazonado y sellado a la plancha para un exterior dorado y un interior jugoso.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">🧅</div>
+      <div class="step-text">
+        <h3>Cebolla Caramelizada</h3>
+        <p>Cocinada a fuego bajo por largo tiempo hasta lograr ese sabor dulce y suave que la hace irresistible.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">🧀</div>
+      <div class="step-text">
+        <h3>El Queso</h3>
+        <p>Fundido directamente sobre la carne caliente para que se derrita perfectamente en cada mordida.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">🍍</div>
+      <div class="step-text">
+        <h3>Las Salsas</h3>
+        <p>Salsa de tomate + salsa de piña artesanal para un balance perfecto entre ácido, dulce y umami.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">🍯</div>
+      <div class="step-text">
+        <h3>El Toque Final</h3>
+        <p>Un toque de miel en el pan para un acabado glorioso. Armamos todo con amor y te la entregamos recién hecha.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PERSONALIZADA -->
+<div class="custom-banner">
+  <div class="custom-card">
+    <h2>¿La querés a tu gusto? 🎨</h2>
+    <p>
+      ¿Más carne? ¿Doble queso? ¿Extra salsa? ¿Algún ingrediente especial?<br><br>
+      <strong style="color: var(--amarillo);">¡Pídela personalizada!</strong> Escríbeme por WhatsApp y armamos la hamburguesa de tus sueños 🤤
+    </p>
+  </div>
+</div>
+
+<!-- CTA WHATSAPP -->
+<div class="cta-section">
+  <p class="cta-text">¿Ya tenés el antojo? Hacé tu pedido ahora 👇</p>
+  <div class="btn-pulse-wrapper">
+    <a
+      href="https://wa.me/573054008578?text=¡Hola!%20Quiero%20hacer%20un%20pedido%20de%20hamburguesas%20para%20el%208%20de%20mayo%20🍔"
+      target="_blank"
+      class="btn-whatsapp"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      PEDIR POR WHATSAPP
+    </a>
+  </div>
+  <p style="margin-top:16px; font-size:0.8rem; color:rgba(255,255,255,0.3); letter-spacing:1px;">Te respondo lo antes posible 🤝</p>
+</div>
+
+<footer>
+  🍔 BURGER HOUSE · HECHO CON AMOR · 9 MAYO 2026
+</footer>
+
+</body>
+</html>
