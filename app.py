@@ -48,7 +48,7 @@ col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.link_button(
         "💬 PEDIR POR WHATSAPP",
-        "https://wa.me/573054008578?text=¡Hola!%20Quiero%20hacer%20un%20pedido%20de%20hamburguesas%20para%20el%208%20de%20mayo%20🍔",
+        "https://wa.me/573103461997?text=¡Hola!%20Quiero%20hacer%20un%20pedido%20de%20hamburguesas%20🍔",
         use_container_width=True
     )
 
